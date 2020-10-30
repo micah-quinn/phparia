@@ -87,11 +87,12 @@ class Asterisk extends AriClientAware
         $uri = "asterisk/config/dynamic/$configClass/$objectType/$id";
 
         try {
-            $response = $this->client->getEndpoint()->put($uri, [
-                'form_params' => [
-                    'fields' => array_map('strval', $fields)
-                ]
-            ]);
+           $response = $this->client->getEndpoint()->put($uri, [
+              'headers' => [
+              'Content-type' => 'application/json',
+           ],
+           'body' => json_encode($fields),
+           ]);
         } catch (RequestException $e) {
             $this->processRequestException($e);
         }
